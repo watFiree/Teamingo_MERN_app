@@ -1,0 +1,27 @@
+.container{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    width: 100%;
+}
+
+.header{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 3rem;
+}
+
+.info{
+    max-width: 400px;
+}
+
+.notes{
+    margin: 2em 0 2em 0;
+    display: grid;
+    justify-items: center;
+    align-items: center;
+    grid-template-columns: repeat(3,auto);
+    grid-template-rows: auto;
+    grid-gap: 2em;
+}

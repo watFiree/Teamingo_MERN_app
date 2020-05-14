@@ -1,0 +1,48 @@
+.container{
+    position: absolute;
+    position: fixed;
+    top: 80px;
+    margin-left: auto;
+    margin-right: auto;
+    left: calc(50% - 30vw - 50px);
+    background-color: white;
+    width: 60vw;
+    height: 80vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+    margin: 50px;
+    border: 2px solid black;
+}
+
+.form{
+    width: 45%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.input{
+    width: 60%;
+}
+
+.button{
+    width: 22%;
+}
+
+.icon{
+    position: absolute;
+    top:5px;
+    right: 5px;
+    &:hover{
+        cursor: pointer;
+    }
+}
+
+.close{
+    width: 100%;
+    height: 100%;
+}
