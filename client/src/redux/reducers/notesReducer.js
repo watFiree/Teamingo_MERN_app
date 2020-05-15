@@ -4,6 +4,7 @@ const initialState = {
     data:[],
     loading:false,
     creating: false,
+    editing:false,
     deleting: false,
     error:null
 }
@@ -78,6 +79,26 @@ const notesReducer = (state = initialState, action) => {
                         ...state.data.filter(item => !action.payload.notes.includes(item._id))
                     ]
                 };
+            case (types.EDIT_NOTE_STARTED):
+                return{
+                    ...state,
+                    editing: true
+                };
+            case (types.EDIT_NOTE_SUCCESS):
+                return{
+                    ...state,
+                    editing: false,
+                    data:[
+                        ...state.data.map(note => note._id === action.payload._id ? {...action.payload} : note)
+                    ]
+                    
+                };
+            case (types.EDIT_NOTE_FAILURE):
+                return{
+                    ...state,
+                    editing: false,
+                    error: action.payload.error
+                }
         default :
             return state;
     }

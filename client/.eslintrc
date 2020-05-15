@@ -9,6 +9,7 @@
     },
     "rules": {
         "react/jsx-filename-extension": [1, { "extensions": [".js", ".jsx"] }],
-        "no-underscore-dangle": 0
+        "no-underscore-dangle": 0,
+        "import/prefer-default-export" : 0
     }
 }

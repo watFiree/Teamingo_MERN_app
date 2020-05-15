@@ -6,6 +6,7 @@ const noteRouter = express.Router();
 noteRouter.route("/")
     .get(noteContoller.findAll)
     .post(noteContoller.createNote)
+    .put(noteContoller.editNote)
     .delete(noteContoller.deleteNote)
 
 

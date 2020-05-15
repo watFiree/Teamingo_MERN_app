@@ -3,33 +3,34 @@ import {connect} from 'react-redux'
 import TextField from '@material-ui/core/TextField';
 import CloseIcon from '@material-ui/icons/Close';
 import Button from '@material-ui/core/Button';
-import { createNote } from '../redux/actions/createNote';
+import { editNote } from '../redux/actions/editNote';
 import styles from '../styles/NoteActionForm.module.scss'
 
-const CreateNote = ({teamData,open,sentCreation}) => {
+const EditNote = ({data,open,updateData}) => {
 
-    const [note, setNote ] = useState({author: '', teamName: '', teamColor: '', title: '', coverImg:'', content:''})
+    const [note, setNote] = useState({...data})
 
     const handleInputChange = e => {
-        setNote({...note, ...teamData,[e.target.id]: e.target.value})
+        setNote({...note, [e.target.id]: e.target.value})
     };
 
-    const handleCreate = e => {
+    const handleSubmit = e => {
         e.preventDefault();
         open(false);
-        sentCreation(note);
+        updateData(note);
     }
 
   return (
     <div className={styles.container}>
         <CloseIcon fontSize='large' onClick={() => open(false)} className={styles.icon} />
-      <form className={styles.form} onSubmit={handleCreate} autoComplete="off">
+      <form className={styles.form} onSubmit={handleSubmit} autoComplete="off">
         <TextField
           onChange={handleInputChange}
           className={styles.input}
           id="title"
           label="Title"
           variant="outlined"
+          defaultValue={data.title}
         />
         <TextField
           onChange={handleInputChange}
@@ -37,6 +38,7 @@ const CreateNote = ({teamData,open,sentCreation}) => {
           id="coverImg"
           label="Image"
           variant="outlined"
+          defaultValue={data.coverImg}
         />
         <TextField
           id="content"
@@ -45,6 +47,7 @@ const CreateNote = ({teamData,open,sentCreation}) => {
           onChange={handleInputChange}
           rows={6}
           variant="outlined"
+          defaultValue={data.content}
           fullWidth
         />
         <Button
@@ -53,8 +56,9 @@ const CreateNote = ({teamData,open,sentCreation}) => {
           variant="contained"
           size="large"
           color="primary"
+          
         >
-            Add
+            Done
         </Button>
       </form>
     </div>
@@ -63,8 +67,8 @@ const CreateNote = ({teamData,open,sentCreation}) => {
 
 const mapDispatchToProps = dispatch => {
     return{
-        sentCreation: data => dispatch(createNote(data))
+        updateData: data => dispatch(editNote(data))
     }
 }
 
-export default connect(null, mapDispatchToProps)(CreateNote);
+export default connect(null, mapDispatchToProps)(EditNote);

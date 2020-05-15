@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useContext } from 'react';
 import {connect} from 'react-redux';
 import {useHistory} from 'react-router-dom';
 import AddIcon from '@material-ui/icons/Add';
@@ -12,19 +12,21 @@ import Avatar from '@material-ui/core/Avatar';
 import NoteIcon from '@material-ui/icons/Note';
 import SupervisorAccountIcon from '@material-ui/icons/SupervisorAccount';
 import Divider from '@material-ui/core/Divider';
+import {Context} from '../context/index';
 import withProtection from '../hoc/withProtection';
 import styles from '../styles/TeamDetailsView.module.scss'
 import NoteCard from '../components/NoteCard';
 import CreateNote from '../components/CreateNote'
+import EditNote from '../components/EditNote'
 
 const TeamDetailsView = ({match,data:teams,notes}) => {
 
     const [data, setData] = useState({admin: {nickname: ' '}, name: ' ' , color: ' ', notes:[], users:[]})
-    const [isOpen, isOpenChange] = useState(false)
-    const [items, setItems] = useState([])
-
-
-    const history = useHistory()
+    const [isCreateNoteOpen, isCreateNoteOpenChange] = useState(false)
+    const [isEditNoteOpen, isEditNoteOpenChange] = useState(false)
+    const [items, setItems] = useState([]);
+    const editingNote = useContext(Context);
+    const history = useHistory();
 
     useEffect(()=>{
         const team = teams.filter(item => item._id === match.params.id)[0];
@@ -35,9 +37,10 @@ const TeamDetailsView = ({match,data:teams,notes}) => {
     },[teams,notes.data,match.params.id]) 
 
     const handleClick = () => {
-        isOpenChange(!isOpen);
+        isCreateNoteOpenChange(!isCreateNoteOpen);
     }
     
+    console.log(editingNote)
     return(
         <div className={styles.container}>
             <h1 className={styles.header}>{data.name}</h1>
@@ -80,10 +83,13 @@ const TeamDetailsView = ({match,data:teams,notes}) => {
             teamName={item.teamName}
             teamColor={item.teamColor}
             idLink={item._id}
+            open ={isEditNoteOpenChange}
+            editing={isEditNoteOpen}
           />) : <h1>There is any notes <span role='img' aria-label='upset-emoji'>🙁</span></h1>}
 
         </div>
-            {isOpen && (<CreateNote close={isOpenChange} teamData={{author: data.admin.nickname, teamName: data.name,  teamColor: data.color}} />)}
+            {isCreateNoteOpen && (<CreateNote open={isCreateNoteOpenChange} teamData={{author: data.admin.nickname, teamName: data.name,  teamColor: data.color}} />)}
+            {isEditNoteOpen && (<EditNote open={isEditNoteOpenChange} data={editingNote.data}/> )}
       </div>
     )
 };

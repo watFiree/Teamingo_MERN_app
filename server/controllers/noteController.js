@@ -28,5 +28,11 @@ module.exports = {
         await team.updateOne({$pull : {notes: req.body.id.toString()}});
         await User.updateMany({_id: usersIds}, {$pull : {notes: req.body.id}});
         res.sendStatus(200);
+    },
+    async editNote(req,res){
+        const {id, title, coverImg, content} = req.body;
+        await Note.findByIdAndUpdate(id, {title, coverImg, content});
+        const updated = await Note.findById(id);
+        res.status(200).send(updated);
     }
 }

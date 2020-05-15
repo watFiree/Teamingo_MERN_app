@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import {connect} from 'react-redux';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
@@ -11,6 +11,7 @@ import CardActions from '@material-ui/core/CardActions';
 import Avatar from '@material-ui/core/Avatar';
 import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
+import {Context} from '../context/index';
 import styles from '../styles/Link.module.scss';
 import {deleteNote} from '../redux/actions/deleteNote'
 
@@ -23,7 +24,9 @@ const NoteCard = ({
   teamColor,
   idLink,
   admin = false,
-  deleteOne
+  deleteOne,
+  open,
+  editing
 }) => {
   const useStyles = makeStyles(() => ({
     root: {
@@ -40,8 +43,15 @@ const NoteCard = ({
   }));
   const classes = useStyles();
   
+  const currentDataToEdit = useContext(Context);
+
   const handleDeletion = () =>{
     deleteOne({id: idLink, teamName})
+  }
+
+  const handleEdition = () => {
+    currentDataToEdit.data = {id: idLink, title, coverImg, content}
+    open(true)
   }
 
   return (
@@ -65,15 +75,19 @@ const NoteCard = ({
         </Typography>
       </CardContent>
       <CardActions>
-        <Link className={styles.link} to={`note/${idLink}`}>
+        <Link className={styles.link} to={`/note/${idLink}`}>
           <Button size="large" color="primary">
             Learn More
           </Button>
         </Link>
         {admin && (
+          <>
+          <Button onClick ={handleEdition} size="large" color="primary" disabled={editing}>
+          Edit
+        </Button>
         <Button onClick ={handleDeletion} size="large" color="secondary">
             Delete
-          </Button>)}
+          </Button> </>)}
       </CardActions>
     </CardWrapper>
   );

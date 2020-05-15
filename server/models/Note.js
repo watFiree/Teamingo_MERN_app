@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 
 const NoteSchema = new mongoose.Schema({
     author: {type: String , required: true},
-    coverImg: {type: String},
+    coverImg: {type: String, default:' '},
     title: {type: String , required: true},
     teamName: {type: String , required: true},
     teamColor: {type: String},
