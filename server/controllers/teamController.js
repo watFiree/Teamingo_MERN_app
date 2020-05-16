@@ -32,5 +32,15 @@ module.exports = {
         await Team.deleteOne({_id: req.body.id});
         await User.updateMany({_id: usersIds}, {$pull : {teams: req.body.id}});
         res.sendStatus(200);
+    },
+    async editTeam(req,res){
+        const {name, color} = req.body;
+        const team = await Team.findOne({_id: req.body.id});
+        if(!team) return res.sendStatus(404);
+        const notesIds = await team.notes;
+        await team.updateOne({name, color});
+        await Note.updateMany({_id: notesIds}, {teamName: name, teamColor: color});
+        const updated = await Team.findOne({_id: req.body.id});
+        res.status(200).send(updated);
     }
 }

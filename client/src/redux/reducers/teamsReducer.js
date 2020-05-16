@@ -4,6 +4,7 @@ const initialState = {
   data: [],
   loading: false,
   creating: false,
+  editing: false,
   deleting: false,
   error: null,
 };
@@ -93,14 +94,31 @@ const teamsReducer = (state = initialState, action) => {
         deleting: false,
         error: action.payload.error,
       };
+    case types.EDIT_TEAM_STARTED:
+      return {
+        ...state,
+        editing: true,
+      };
+    case types.EDIT_TEAM_SUCCESS:
+      return {
+        ...state,
+        editing: false,
+        error: false,
+        data: [
+          ...state.data.map((team) =>
+            team._id === action.payload._id ? { ...action.payload } : team,
+          ),
+        ],
+      };
+    case types.GET_NOTES_FAILURE:
+      return {
+        ...state,
+        editing: false,
+        error: action.payload.error,
+      };
     default:
       return state;
   }
 };
 
 export default teamsReducer;
-
-// ,{
-//     ...state.data[action.payload.index],
-//     notes: [...state.data[action.payload.index].notes, action.payload.id]
-// }

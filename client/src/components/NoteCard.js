@@ -1,5 +1,5 @@
 import React, { useContext } from 'react';
-import {connect} from 'react-redux';
+import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import { makeStyles } from '@material-ui/core/styles';
@@ -11,9 +11,9 @@ import CardActions from '@material-ui/core/CardActions';
 import Avatar from '@material-ui/core/Avatar';
 import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
-import {Context} from '../context/index';
+import { Context } from '../context/index';
 import styles from '../styles/Link.module.scss';
-import {deleteNote} from '../redux/actions/deleteNote'
+import { deleteNote } from '../redux/actions/deleteNote';
 
 const NoteCard = ({
   title,
@@ -26,7 +26,7 @@ const NoteCard = ({
   admin = false,
   deleteOne,
   open,
-  editing
+  editing,
 }) => {
   const useStyles = makeStyles(() => ({
     root: {
@@ -42,17 +42,17 @@ const NoteCard = ({
     },
   }));
   const classes = useStyles();
-  
+
   const currentDataToEdit = useContext(Context);
 
-  const handleDeletion = () =>{
-    deleteOne({id: idLink, teamName})
-  }
+  const handleDeletion = () => {
+    deleteOne({ id: idLink, teamName });
+  };
 
   const handleEdition = () => {
-    currentDataToEdit.data = {id: idLink, title, coverImg, content}
-    open(true)
-  }
+    currentDataToEdit.data = { id: idLink, title, coverImg, content };
+    open(true);
+  };
 
   return (
     <CardWrapper variant="outlined" className={classes.root}>
@@ -82,12 +82,19 @@ const NoteCard = ({
         </Link>
         {admin && (
           <>
-          <Button onClick ={handleEdition} size="large" color="primary" disabled={editing}>
-          Edit
-        </Button>
-        <Button onClick ={handleDeletion} size="large" color="secondary">
-            Delete
-          </Button> </>)}
+            <Button
+              onClick={handleEdition}
+              size="large"
+              color="primary"
+              disabled={editing}
+            >
+              Edit
+            </Button>
+            <Button onClick={handleDeletion} size="large" color="secondary">
+              Delete
+            </Button>{' '}
+          </>
+        )}
       </CardActions>
     </CardWrapper>
   );
@@ -101,12 +108,12 @@ NoteCard.propTypes = {
   teamName: PropTypes.string.isRequired,
   teamColor: PropTypes.string.isRequired,
   idLink: PropTypes.string.isRequired,
-  admin: PropTypes.string.isRequired
+  admin: PropTypes.string.isRequired,
 };
 
-const mapDispatchToProps = dispatch => {
-  return{
-    deleteOne: data => dispatch(deleteNote(data))
-  }
-}
-export default connect(null,mapDispatchToProps)(NoteCard);
+const mapDispatchToProps = (dispatch) => {
+  return {
+    deleteOne: (data) => dispatch(deleteNote(data)),
+  };
+};
+export default connect(null, mapDispatchToProps)(NoteCard);

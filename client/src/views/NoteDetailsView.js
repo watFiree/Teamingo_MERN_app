@@ -12,7 +12,8 @@ const NoteDetailsView = ({data,match}) => {
     const history = useHistory()
     useEffect(()=>{
         const currNote = data.find( x => x._id === match.params.id)
-        currNote ? setState(currNote) : history.push("/teams")
+        if(currNote) setState(currNote);
+        else history.push("/teams");
     },[data, history, match.params.id])
     return(
         <>

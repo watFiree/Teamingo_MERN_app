@@ -30,7 +30,6 @@ const SignInView = ({setAuth}) => {
         password,
       }).then(res => {
         if(res.status === 200){
-          console.log(res.data)
           setAuth(res.data);
           history.push('/')
         }else{
@@ -52,7 +51,7 @@ const SignInView = ({setAuth}) => {
       backgroundColor: theme.palette.secondary.main,
     },
     form: {
-      width: '100%', // Fix IE 11 issue.
+      width: '100%',
       marginTop: theme.spacing(1),
     },
     submit: {
@@ -130,7 +129,7 @@ const SignInView = ({setAuth}) => {
 };
 
 SignInView.propTypes = {
-  setData: PropTypes.func.isRequired,
+  setAuth: PropTypes.func.isRequired,
 }
 
 const mapDispatchToProps = dispatch => ({

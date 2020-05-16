@@ -7,5 +7,6 @@ teamRouter.route('/')
     .get(teamContoller.findAll)
     .post(teamContoller.createTeam)
     .delete(teamContoller.deleteTeam)
+    .put(teamContoller.editTeam)
 
 module.exports = teamRouter;

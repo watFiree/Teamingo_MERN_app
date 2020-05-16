@@ -9,15 +9,20 @@ import { getNotes } from '../redux/actions/getNotes';
 
 const MainView = ({ user, notes, setData }) => {
   useEffect(() => {
-    if(user.notesId.length) setData(user.notesId);
-  }, []);
-
-  
+    if (user.notesId.length) setData(user.notesId);
+  }, [user.notesId]);
   const { data } = notes;
-  console.log(data)
+
   return (
     <div className={styles.grid}>
-      {!user.notesId.length && <h1>There is any notes <span role='img' aria-label='upset-emoji'>🙁</span></h1>}
+      {!user.notesId.length && (
+        <h1>
+          There is any notes{' '}
+          <span role="img" aria-label="upset-emoji">
+            🙁
+          </span>
+        </h1>
+      )}
       {notes.loading ? (
         <CircularProgress className={styles.loader} />
       ) : (

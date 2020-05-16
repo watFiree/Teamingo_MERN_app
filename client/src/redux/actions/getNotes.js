@@ -3,7 +3,7 @@ import qs from 'qs';
 import {
   GET_NOTES_STARTED,
   GET_NOTES_SUCCESS,
-  GET_NOTES_FAILURE
+  GET_NOTES_FAILURE,
 } from './actionTypes';
 
 const getNotesStarted = () => ({
@@ -24,9 +24,8 @@ const getNotesFailure = (error) => ({
   },
 });
 
-// eslint-disable-next-line import/prefer-default-export
 export const getNotes = (notesId) => {
-  return dispatch => {
+  return (dispatch) => {
     dispatch(getNotesStarted());
 
     axios
