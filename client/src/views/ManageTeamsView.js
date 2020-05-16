@@ -9,6 +9,8 @@ import withProtection from '../hoc/withProtection';
 import CreateTeam from '../components/CreateTeam';
 import EditTeam from '../components/EditTeam';
 import SimpleTeamCard from '../components/SimpleTeamCard';
+import styles from '../styles/ManageTeamsView.module.scss';
+import AddAction from '../components/AddAction';
 
 const ManageTeamsView = ({user,teams,setTeams}) => {
     const [isCreateTeamOpen, isCreateTeamOpenChange] = useState(false)
@@ -27,17 +29,19 @@ const ManageTeamsView = ({user,teams,setTeams}) => {
     }
     
     return (
-        <>
-            {ownedTeams.length && ownedTeams.map(team => <SimpleTeamCard key={team.name}data={team} open ={isEditTeamOpenChange} editing={isEditTeamOpen}/>)}
-            <Tooltip title="Add" aria-label="add" onClick={handleClick}>
-                <Fab color="primary">
-                    <AddIcon />
-                </Fab>
-            </Tooltip>
+        <div className={styles.container}>
+            <div className={styles.list}>
+                {ownedTeams.length && ownedTeams.map(team => <SimpleTeamCard key={team.name}data={team} open ={isEditTeamOpenChange} editing={isEditTeamOpen}/>)}
+            </div>
+            <div className={styles.actions} >
+               <AddAction text="Create Team" emoji="✍🏿" onClick={handleClick} />
+            </div>
+            
+
             {isCreateTeamOpen &&  <CreateTeam open={isCreateTeamOpenChange} />}
             {isEditTeamOpen &&  <EditTeam open={isEditTeamOpenChange} data={editingTeam.data} />}
            
-        </>
+        </div>
     )
 }
 

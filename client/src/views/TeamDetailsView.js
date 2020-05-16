@@ -8,6 +8,7 @@ import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
 import ListItemAvatar from '@material-ui/core/ListItemAvatar';
+import Typography from '@material-ui/core/Typography';
 import Avatar from '@material-ui/core/Avatar';
 import NoteIcon from '@material-ui/icons/Note';
 import SupervisorAccountIcon from '@material-ui/icons/SupervisorAccount';
@@ -18,6 +19,7 @@ import styles from '../styles/TeamDetailsView.module.scss';
 import NoteCard from '../components/NoteCard';
 import CreateNote from '../components/CreateNote';
 import EditNote from '../components/EditNote';
+import AddAction from '../components/AddAction';
 
 const TeamDetailsView = ({ match, data: teams, notes }) => {
   const [data, setData] = useState({
@@ -43,14 +45,14 @@ const TeamDetailsView = ({ match, data: teams, notes }) => {
     setItems(filtredNotes);
   }, [teams, notes.data, match.params.id]);
 
-  const handleClick = () => {
+  const handleOpenCreateNote = () => {
     isCreateNoteOpenChange(!isCreateNoteOpen);
   };
 
   return (
     <div className={styles.container}>
       <h1 className={styles.header}>{data.name}</h1>
-      <div className={styles.info}>
+      <div className={styles.heading}>
         <List className={styles.info}>
           <ListItem>
             <ListItemAvatar>
@@ -70,11 +72,14 @@ const TeamDetailsView = ({ match, data: teams, notes }) => {
             <ListItemText primary="Notes" secondary={data.notes.length} />
           </ListItem>
         </List>
-        <Tooltip title="Add" aria-label="add" onClick={handleClick}>
-          <Fab color="primary">
-            <AddIcon />
-          </Fab>
-        </Tooltip>
+        <div className={styles.actions__wrapper}>
+          <AddAction
+            text="Create note "
+            emoji="✍🏻"
+            onClick={handleOpenCreateNote}
+          />
+          <AddAction text="Manage Users " emoji="👩‍👧‍👦" />
+        </div>
       </div>
       <div className={styles.notes}>
         {items.length ? (
