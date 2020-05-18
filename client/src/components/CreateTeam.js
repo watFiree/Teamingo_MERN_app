@@ -39,7 +39,7 @@ const CreateNote = ({ user, createFunction, open }) => {
         </span>{' '}
       </h1>
       <form className={styles.form} onSubmit={handleCreate} autoComplete="off">
-        <TextField onChange={handleChange} label="Team name" id="name" />
+        <TextField onChange={handleChange} label="Team name" id="name" variant="outlined" />
         <Button type="submit" variant="contained" color="primary">
           {' '}
           create

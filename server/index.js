@@ -15,6 +15,7 @@ const port = process.env.PORT || 7777;
 const authRouter = require('./routes/authRoutes');
 const noteRouter = require('./routes/noteRoutes');
 const teamRouter = require('./routes/teamRoutes');
+const userRouter = require('./routes/userRoutes');
 
 app.use(
     express.json(),
@@ -38,7 +39,7 @@ const verify = require('./config/verifyToken');
 app.use('/auth', authRouter);
 app.use('/notes', noteRouter);
 app.use('/teams', teamRouter);
-
+app.use('/user', userRouter);
 
 app.get('/',(req,res) =>{
    res.send('hello')

@@ -1,0 +1,13 @@
+.container{
+    width: 50%;
+    height: 30%;
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+    border: 2px solid black;
+    margin:10px;
+
+    h1{
+        margin:0;
+    }
+}

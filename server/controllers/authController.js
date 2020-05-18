@@ -17,6 +17,7 @@ module.exports = {
           nickname: req.body.nickname,
           email: req.body.email,
           password: hashedPassword,
+          invitations: [],
           notes: [],
           teams:[]
         });
@@ -54,8 +55,7 @@ module.exports = {
                 httpOnly: true,
                 path:'/'
               });
-              console.log(token)
-              return res.status(200).send({nickname: data.nickname, id:data._id,notes: data.notes, teams: data.teams})
+              return res.status(200).send({nickname: data.nickname, id:data._id,notes: data.notes, teams: data.teams, invitations: data.invitations})
             }
             return res.sendStatus(404);
           })

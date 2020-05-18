@@ -71,7 +71,7 @@ const Header = ({ setAuth, logout }) => {
             Profile
           </MenuItem>
           <Link to="/profile/teams" className={styles.link}>
-            <MenuItem>Manage Teams</MenuItem>
+            <MenuItem>Your Teams</MenuItem>
           </Link>
           <MenuItem className={styles.link} onClick={handleLogout}>
             Logout

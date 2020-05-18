@@ -1,14 +1,10 @@
 import React, { useEffect, useState, useContext } from 'react';
 import { connect } from 'react-redux';
 import { useHistory } from 'react-router-dom';
-import AddIcon from '@material-ui/icons/Add';
-import Fab from '@material-ui/core/Fab';
-import Tooltip from '@material-ui/core/Tooltip';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
 import ListItemAvatar from '@material-ui/core/ListItemAvatar';
-import Typography from '@material-ui/core/Typography';
 import Avatar from '@material-ui/core/Avatar';
 import NoteIcon from '@material-ui/icons/Note';
 import SupervisorAccountIcon from '@material-ui/icons/SupervisorAccount';
@@ -20,10 +16,11 @@ import NoteCard from '../components/NoteCard';
 import CreateNote from '../components/CreateNote';
 import EditNote from '../components/EditNote';
 import AddAction from '../components/AddAction';
+import ManageMembers from '../components/ManageMembers';
 
-const TeamDetailsView = ({ match, data: teams, notes }) => {
+const TeamDetailsView = ({ match, data: teams, notes, user }) => {
   const [data, setData] = useState({
-    admin: { nickname: ' ' },
+    admin: { nickname: ' ', id: false },
     name: ' ',
     color: ' ',
     notes: [],
@@ -31,7 +28,9 @@ const TeamDetailsView = ({ match, data: teams, notes }) => {
   });
   const [isCreateNoteOpen, isCreateNoteOpenChange] = useState(false);
   const [isEditNoteOpen, isEditNoteOpenChange] = useState(false);
+  const [isManageMembersOpen, isManageMembersOpenChange] = useState(false);
   const [items, setItems] = useState([]);
+  const [admin, setAdmin] = useState(false);
   const editingNote = useContext(Context);
   const history = useHistory();
 
@@ -39,14 +38,19 @@ const TeamDetailsView = ({ match, data: teams, notes }) => {
     const team = teams.filter((item) => item._id === match.params.id)[0];
     if (!team) history.push('/teams');
     setData(team);
+    if (user.data.id === data.admin.id) setAdmin(true);
     const filtredNotes = notes.data.filter((note) =>
       team.notes.includes(note._id),
     );
     setItems(filtredNotes);
-  }, [teams, notes.data, match.params.id]);
+  }, [teams, notes.data, match.params.id, user.data, data]);
 
   const handleOpenCreateNote = () => {
     isCreateNoteOpenChange(!isCreateNoteOpen);
+  };
+
+  const handleOpenManageMembers = () => {
+    isManageMembersOpenChange(!isManageMembersOpen);
   };
 
   return (
@@ -72,20 +76,26 @@ const TeamDetailsView = ({ match, data: teams, notes }) => {
             <ListItemText primary="Notes" secondary={data.notes.length} />
           </ListItem>
         </List>
-        <div className={styles.actions__wrapper}>
-          <AddAction
-            text="Create note "
-            emoji="✍🏻"
-            onClick={handleOpenCreateNote}
-          />
-          <AddAction text="Manage Users " emoji="👩‍👧‍👦" />
-        </div>
+        {admin && (
+          <div className={styles.actions__wrapper}>
+            <AddAction
+              text="Create note "
+              emoji="✍🏻"
+              onClick={handleOpenCreateNote}
+            />
+            <AddAction 
+              text="Manage Members " 
+              emoji="👨‍👨‍👧‍👦" 
+              onClick={handleOpenManageMembers}
+              />
+          </div>
+        )}
       </div>
       <div className={styles.notes}>
         {items.length ? (
           items.map((item) => (
             <NoteCard
-              admin
+              admin={admin}
               key={item.title}
               title={item.title}
               author={item.author}
@@ -120,10 +130,16 @@ const TeamDetailsView = ({ match, data: teams, notes }) => {
       {isEditNoteOpen && (
         <EditNote open={isEditNoteOpenChange} data={editingNote.data} />
       )}
+
+      {isManageMembersOpen && (<ManageMembers users={data.users} team={{teamId:data._id , teamName: data.name}} />)}
     </div>
   );
 };
 
-const mapStateToProps = ({ teams: { data }, notes }) => ({ data, notes });
+const mapStateToProps = ({ teams: { data }, notes, user }) => ({
+  data,
+  notes,
+  user,
+});
 
 export default withProtection(connect(mapStateToProps)(TeamDetailsView));

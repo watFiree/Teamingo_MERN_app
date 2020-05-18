@@ -1,8 +1,5 @@
 import React, { useState, useEffect, useContext} from 'react';
 import {connect} from 'react-redux';
-import AddIcon from '@material-ui/icons/Add';
-import Fab from '@material-ui/core/Fab';
-import Tooltip from '@material-ui/core/Tooltip';
 import {Context} from '../context/index'
 import {getTeams} from '../redux/actions/getTeams';
 import withProtection from '../hoc/withProtection';
@@ -11,6 +8,7 @@ import EditTeam from '../components/EditTeam';
 import SimpleTeamCard from '../components/SimpleTeamCard';
 import styles from '../styles/ManageTeamsView.module.scss';
 import AddAction from '../components/AddAction';
+import Invitation from '../components/Invitation';
 
 const ManageTeamsView = ({user,teams,setTeams}) => {
     const [isCreateTeamOpen, isCreateTeamOpenChange] = useState(false)
@@ -19,7 +17,7 @@ const ManageTeamsView = ({user,teams,setTeams}) => {
     const editingTeam = useContext(Context);
 
     useEffect(()=>{
-        if(!teams.data.length) setTeams(user.teamsId);
+        if(!teams.data.length && user.teamsId.length) setTeams(user.teamsId);
         const filtredTeams = teams.data.filter(team =>  team.admin.id === user.data.id);
         setOwnedTeams(filtredTeams);
     },[teams.data])
@@ -27,14 +25,27 @@ const ManageTeamsView = ({user,teams,setTeams}) => {
     const handleClick = () => {
         isCreateTeamOpenChange(!isCreateTeamOpen);
     }
-    
+    console.log(ownedTeams)
     return (
         <div className={styles.container}>
             <div className={styles.list}>
-                {ownedTeams.length && ownedTeams.map(team => <SimpleTeamCard key={team.name}data={team} open ={isEditTeamOpenChange} editing={isEditTeamOpen}/>)}
+                {ownedTeams.length ? 
+                ownedTeams.map(team => <SimpleTeamCard key={team.name}data={team} open ={isEditTeamOpenChange} editing={isEditTeamOpen}/>) : 
+                <h1>
+                    Create your team{' '}
+                    <span role="img" aria-label="upset-emoji">
+                    ➡️
+                    </span>
+                </h1>}
             </div>
             <div className={styles.actions} >
                <AddAction text="Create Team" emoji="✍🏿" onClick={handleClick} />
+                <div className={styles.invitations}>
+                    <h2>Invitations</h2>
+                    {user.invitations.map( item => <Invitation data={item} />)}
+                </div>
+                
+               
             </div>
             
 

@@ -3,8 +3,11 @@ import * as types from '../actions/actionTypes';
 const initialState = {
   authenticated: false,
   data: { nickname: ' ', id: ' ' },
+  invitations: [],
   notesId: [],
   teamsId: [],
+  proccessing: false,
+  error: false
 };
 
 const userReducer = (state = initialState, action) => {
@@ -22,6 +25,7 @@ const userReducer = (state = initialState, action) => {
           nickname: action.payload.nickname,
           id: action.payload.id,
         },
+        invitations: [...action.payload.invitations],
         notesId: [...action.payload.notes],
         teamsId: [...action.payload.teams],
       };
@@ -48,6 +52,34 @@ const userReducer = (state = initialState, action) => {
         ],
         teamsId: [...state.teamsId.filter((id) => id !== action.payload.id)],
       };
+      case types.ADD_USER_STARTED:
+        return{
+          ...state,
+          proccessing: true,
+        };
+      case types.ADD_USER_SUCCESS:
+        return{
+          ...state,
+          invitations: [
+            ...state.invitations.filter(item => item.teamId !== action.payload._id)
+          ],
+          notesId: [
+            ...state.notesId,
+            ...action.payload.notes
+          ],
+          teamsId: [
+            ...state.teamsId,
+            action.payload._id
+          ],
+          proccessing:false,
+          error:false
+        };
+      case types.ADD_USER_FAILURE:
+        return{
+          ...state,
+          proccessing:false,
+          error: action.payload.error
+        }
     default:
       return state;
   }

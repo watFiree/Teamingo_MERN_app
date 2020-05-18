@@ -116,6 +116,20 @@ const teamsReducer = (state = initialState, action) => {
         editing: false,
         error: action.payload.error,
       };
+    case types.INVITE_USER_FAILURE:
+      return {
+        ...state,
+        error: action.payload.error,
+      };
+      
+    case types.ADD_USER_SUCCESS:
+      return {
+        ...state,
+        data: [
+          ...state.data,
+          action.payload
+        ]
+      }
     default:
       return state;
   }
