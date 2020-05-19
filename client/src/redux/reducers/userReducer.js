@@ -79,7 +79,48 @@ const userReducer = (state = initialState, action) => {
           ...state,
           proccessing:false,
           error: action.payload.error
-        }
+        };
+      case types.REMOVE_INVITATION_STARTED:
+        return{
+          ...state,
+          proccessing: true,
+        };
+      case types.REMOVE_INVITATION_SUCCESS:
+        return{
+          ...state,
+          proccessing: false,
+          error: false,
+          invitations: [
+            ...state.invitations.filter(item => item.teamId !== action.payload.teamId)
+          ]
+        };
+      case types.REMOVE_INVITATION_FAILURE: 
+      return {
+        ...state,
+        proccessing: false,
+        error : action.payload.error
+      };
+    case types.LEAVE_TEAM_STARTED:
+      return{
+        ...state,
+        proccessing: true
+      };
+    case types.LEAVE_TEAM_SUCCESS:
+      return{
+        ...state,
+        proccessing: false,
+        error: false,
+        notesId: [
+          ...state.notesId.filter((id) => !action.payload.notesIds.includes(id)),
+        ],
+        teamsId: [...state.teamsId.filter((id) => id !== action.payload.teamId)],
+      };
+    case types.LEAVE_TEAM_FAILURE:
+      return {
+        ...state,
+        proccessing: false,
+        error: action.payload.error
+      }
     default:
       return state;
   }

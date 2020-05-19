@@ -20,7 +20,7 @@ const CreateNote = ({ user, createFunction, open }) => {
     setData({
       ...data,
       admin: { nickname: user.data.nickname, id: user.data.id },
-      users: [user.data.id],
+      users: [{ nickname: user.data.nickname, id: user.data.id }],
       [e.target.id]: e.target.value,
     });
   };

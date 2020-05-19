@@ -17,7 +17,7 @@ const SignInView = ({setAuth}) => {
   const history = useHistory();
   const [nickname, setNickname] = useState('');
   const [password, setPassword] = useState('');
-  const [error, setError] = useState(false);
+  const [error, setError] = useState('');
   const handleChange = (e) => {
     if (e.target.id === 'nickname') setNickname(e.target.value);
     if (e.target.id === 'password') setPassword(e.target.value);
@@ -33,10 +33,10 @@ const SignInView = ({setAuth}) => {
           setAuth(res.data);
           history.push('/')
         }else{
-          setError(true)
+          setError(res.data)
         }
       })
-      .catch(() => setError(true));
+      .catch(({response}) => setError(response.data.message));
   };
 
   const useStyles = makeStyles((theme) => ({
@@ -101,6 +101,9 @@ const SignInView = ({setAuth}) => {
             error={error}
             onChange={handleChange}
           />
+          {error && <Typography component="p" variant="subtitle1" color="secondary" >
+            {error}
+          </Typography>}
           <Button
             type="submit"
             fullWidth

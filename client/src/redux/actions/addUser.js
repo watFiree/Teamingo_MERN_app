@@ -22,7 +22,7 @@ const addUserStarted = () => ({
 export const addUser = input => {
     return dispatch => {
         dispatch(addUserStarted())
-        axios.post('http://localhost:6969/user/add', {
+        axios.post('http://localhost:6969/teams/user', {
             ...input
         })
         .then(({data}) => dispatch(addUserSuccess(data)))

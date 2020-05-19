@@ -131,7 +131,7 @@ const TeamDetailsView = ({ match, data: teams, notes, user }) => {
         <EditNote open={isEditNoteOpenChange} data={editingNote.data} />
       )}
 
-      {isManageMembersOpen && (<ManageMembers users={data.users} team={{teamId:data._id , teamName: data.name}} />)}
+      {isManageMembersOpen && (<ManageMembers users={data.users.filter(item => item.id !== user.data.id) /* fliltring members without current user */} team={{teamId:data._id , teamName: data.name}} open={isManageMembersOpenChange} />)}
     </div>
   );
 };

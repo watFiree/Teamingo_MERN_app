@@ -30,7 +30,7 @@ export const deleteTeam = (input) => {
     dispatch(deleteTeamStarted());
     axios
       .delete('http://localhost:6969/teams/', { data: input })
-      .then(() => dispatch(deleteTeamSuccess(input)))
+      .then(({data}) => dispatch(deleteTeamSuccess(data)))
       .catch((err) => dispatch(deleteTeamFailure(err)));
   };
 };

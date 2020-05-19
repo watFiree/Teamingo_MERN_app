@@ -24,20 +24,19 @@ module.exports = {
       
         try {
           if (checkEmail.length !== 0) {
-            console.log("wrong email");
-            return res.sendStatus(404);
+            return res.status(400).send({message: "This email exists already !"});
           }
       
           if (checkNickname.length !== 0) {
-            return res.send(400).send("This nickname exists already !");
+            return res.status(400).send({message: "This nickname exists already !"});
           }
       
           await user.save((err) => {
-            if (err) return res.sendStatus(400);
-            res.status(201).send({nickname: user.nickname, id:user._id, notes: user.notes, teams: user.teams});
+            if (err) return res.status(400).send({message: "Something went wrong :("});
+            res.status(201).send({nickname: user.nickname, id:user._id, notes: user.notes, teams: user.teams, invitations: user.invitations});
           });
         } catch (err) {
-          res.sendStatus(404).send(err);
+          res.sendStatus(400).send({message: "Something went wrong :("});
         }
       },
 
@@ -57,11 +56,12 @@ module.exports = {
               });
               return res.status(200).send({nickname: data.nickname, id:data._id,notes: data.notes, teams: data.teams, invitations: data.invitations})
             }
-            return res.sendStatus(404);
+              
+            return res.status(400).send({message: "Incorrect password"})
+
           })
-          .catch((err) => {
-            res.sendStatus(404);
-            console.log(err);
+          .catch(() => {
+            res.status(400).send({message: "User not found"});
           });
       }
 }

@@ -105,13 +105,22 @@ const notesReducer = (state = initialState, action) => {
         ...state,
         data: [
           ...state.data.map((note) =>
-            note._id === action.payload._id
+            action.payload.notes.includes(note._id)
               ? {
                   ...note,
                   teamName: action.payload.name,
                   teamColor: action.payload.color,
                 }
               : note,
+          ),
+        ],
+      };
+    case types.LEAVE_TEAM_SUCCESS:
+      return {
+        ...state,
+        data: [
+          ...state.data.filter(
+            (item) => !action.payload.notesIds.includes(item._id),
           ),
         ],
       };

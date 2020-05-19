@@ -19,7 +19,7 @@ const SignUpView = ({ setAuth }) => {
   const [nickname, setNickname] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [error, setError] = useState(false);
+  const [error, setError] = useState('');
   const handleChange = (e) => {
     if (e.target.id === 'nickname') setNickname(e.target.value);
     if (e.target.id === 'email') setEmail(e.target.value);
@@ -35,14 +35,13 @@ const SignUpView = ({ setAuth }) => {
       })
       .then((res) => {
         if (res.status === 201) {
-          setAuth(true);
+          setAuth(res.data);
           history.push('/');
         } else {
-          setAuth(false);
-          setError(true);
+          setError(res.data);
         }
       })
-      .catch(() => setError(true));
+      .catch(({response}) => setError(response.data.message));
   };
   const useStyles = makeStyles((theme) => ({
     paper: {
@@ -119,6 +118,11 @@ const SignUpView = ({ setAuth }) => {
             error={error}
             onChange={handleChange}
           />
+          {error && (
+            <Typography component="p" variant="subtitle1" color="secondary">
+              {error}
+            </Typography>
+          )}
           <Button
             type="submit"
             fullWidth
@@ -146,7 +150,7 @@ SignUpView.propTypes = {
 };
 
 const mapDispatchToProps = (dispatch) => ({
-  setAuth: (isAuth) => dispatch(authUser(isAuth)),
+  setAuth : data => dispatch(authUser(data)),
 });
 
 export default connect(null, mapDispatchToProps)(SignUpView);

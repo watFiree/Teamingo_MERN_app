@@ -1,4 +1,5 @@
 import React from 'react';
+import {connect} from 'react-redux';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { makeStyles } from '@material-ui/core/styles';
@@ -14,6 +15,8 @@ import CardContent from '@material-ui/core/CardContent';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 import styles from '../styles/Link.module.scss';
+import {leaveTeam} from '../redux/actions/leaveTeam';
+import {deleteTeam} from '../redux/actions/deleteTeam';
 
 const useStyles = makeStyles({
   root: {
@@ -25,8 +28,17 @@ const useStyles = makeStyles({
   },
 });
 
-const TeamCard = ({ admin, teamName, users, notes, idLink }) => {
+const TeamCard = ({ admin, teamName, users, notes, idLink, user, leaveFunction,deleteFunction}) => {
   const classes = useStyles();
+
+  const handleLeave = () => {
+    const data = {id: user.data.id, teamId: idLink}
+    if(admin.nickname === user.data.nickname){
+      deleteFunction(data)
+    }else{
+    leaveFunction(data)
+    }
+  }
 
   return (
     <Card className={classes.root}>
@@ -59,7 +71,7 @@ const TeamCard = ({ admin, teamName, users, notes, idLink }) => {
           </Button>
         </Link>
         <Link className={styles.link} to="teams/">
-          <Button size="large" color="primary">
+          <Button size="large" color="secondary" onClick={handleLeave} >
             Leave
           </Button>
         </Link>
@@ -76,4 +88,11 @@ TeamCard.propTypes = {
   notes: PropTypes.objectOf().isRequired,
 };
 
-export default TeamCard;
+const mapStateToProps = ({user}) => ({user});
+
+const mapDispatchToProps = dispatch => ({
+    leaveFunction: data => dispatch(leaveTeam(data)),
+    deleteFunction: data => dispatch(deleteTeam(data))
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(TeamCard);
