@@ -11,6 +11,7 @@ module.exports = {
     async createTeam(req,res){
         const data = {
             ...req.body,
+            creators: [],
             notes:[],
         };
         const team = await new Team(data);

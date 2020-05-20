@@ -8,7 +8,8 @@ userRouter.route('/invite')
     .post(userController.inviteUser)
     .delete(userController.removeInvitation)
 
-userRouter.route('/promote')
+userRouter.route('/role')
     .post(userController.promoteUser)
+    .delete(userController.degradeUser)
     
 module.exports = userRouter;

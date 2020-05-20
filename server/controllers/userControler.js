@@ -20,7 +20,14 @@ module.exports = {
         const {nickname,id,teamId} = req.body;
         const team = await Team.findOne({_id: teamId});
         if(!team) return res.sendStatus(404);
-        await team.updateOne({$push: {admin:{nickname, id}}})
-        res.status(200).status({user:{nickname, id}, teamId})
-    }
+        await team.updateOne({$push: {creators:{nickname, id}}})
+        res.status(200).send({user:{nickname, id}, teamId})
+    },
+    async degradeUser(req,res){
+        const {nickname,id,teamId} = req.body;
+        const team = await Team.findOne({_id: teamId});
+        if(!team) return res.sendStatus(404);
+        await team.updateOne({$pull: {creators:{nickname, id}}});
+        res.status(200).send({userId: id, teamId})
+    } 
 }

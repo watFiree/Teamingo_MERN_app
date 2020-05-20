@@ -20,9 +20,10 @@ import ManageMembers from '../components/ManageMembers';
 
 const TeamDetailsView = ({ match, data: teams, notes, user }) => {
   const [data, setData] = useState({
-    admin: { nickname: ' ', id: false },
-    name: ' ',
-    color: ' ',
+    admin: { nickname: '', id: '' },
+    name: '',
+    color: '',
+    creators: [],
     notes: [],
     users: [],
   });
@@ -31,6 +32,7 @@ const TeamDetailsView = ({ match, data: teams, notes, user }) => {
   const [isManageMembersOpen, isManageMembersOpenChange] = useState(false);
   const [items, setItems] = useState([]);
   const [admin, setAdmin] = useState(false);
+  const [creator, setCreator] = useState(false);
   const editingNote = useContext(Context);
   const history = useHistory();
 
@@ -38,12 +40,13 @@ const TeamDetailsView = ({ match, data: teams, notes, user }) => {
     const team = teams.filter((item) => item._id === match.params.id)[0];
     if (!team) history.push('/teams');
     setData(team);
-    if (user.data.id === data.admin.id) setAdmin(true);
     const filtredNotes = notes.data.filter((note) =>
       team.notes.includes(note._id),
     );
     setItems(filtredNotes);
-  }, [teams, notes.data, match.params.id, user.data, data]);
+    if (user.data.id === data.admin.id) setAdmin(true);
+    if (data.creators.some(person => person.id === user.data.id)) setCreator(true);
+  }, [teams, notes.data, match.params.id, user, data]);
 
   const handleOpenCreateNote = () => {
     isCreateNoteOpenChange(!isCreateNoteOpen);
@@ -76,26 +79,29 @@ const TeamDetailsView = ({ match, data: teams, notes, user }) => {
             <ListItemText primary="Notes" secondary={data.notes.length} />
           </ListItem>
         </List>
-        {admin && (
+        
           <div className={styles.actions__wrapper}>
+          {( admin || creator ) && (
             <AddAction
               text="Create note "
               emoji="✍🏻"
               onClick={handleOpenCreateNote}
-            />
+            /> )}
+            {admin && (
             <AddAction 
               text="Manage Members " 
               emoji="👨‍👨‍👧‍👦" 
               onClick={handleOpenManageMembers}
-              />
+              />)}
           </div>
-        )}
+        
       </div>
       <div className={styles.notes}>
         {items.length ? (
           items.map((item) => (
             <NoteCard
               admin={admin}
+              creator = {creator}
               key={item.title}
               title={item.title}
               author={item.author}
@@ -121,7 +127,7 @@ const TeamDetailsView = ({ match, data: teams, notes, user }) => {
         <CreateNote
           open={isCreateNoteOpenChange}
           teamData={{
-            author: data.admin.nickname,
+            author: user.data.nickname,
             teamName: data.name,
             teamColor: data.color,
           }}
@@ -131,7 +137,7 @@ const TeamDetailsView = ({ match, data: teams, notes, user }) => {
         <EditNote open={isEditNoteOpenChange} data={editingNote.data} />
       )}
 
-      {isManageMembersOpen && (<ManageMembers users={data.users.filter(item => item.id !== user.data.id) /* fliltring members without current user */} team={{teamId:data._id , teamName: data.name}} open={isManageMembersOpenChange} />)}
+      {isManageMembersOpen && (<ManageMembers users={data.users.filter(item => item.id !== user.data.id) /* fliltring members without current user */} team={{teamId:data._id , teamName: data.name, creators: data.creators}} open={isManageMembersOpenChange} />)}
     </div>
   );
 };

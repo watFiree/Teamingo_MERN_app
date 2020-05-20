@@ -165,7 +165,7 @@ const teamsReducer = (state = initialState, action) => {
           editing:false,
           error:false,
           data:[
-            ...state.data.map( team => team._id === action.payload.teamId ? {...team, admin: [ ...team.admin, {...action.payload.user}]} : team)
+            ...state.data.map( team => team._id === action.payload.teamId ? {...team, creators: [ ...team.creators, {...action.payload.user}]} : team)
           ]
         };
       case types.PROMOTE_USER_FAILURE:
@@ -173,7 +173,27 @@ const teamsReducer = (state = initialState, action) => {
           ...state,
           editing:false,
           error: action.payload.error
-        }
+        };
+        case types.DEGRADE_USER_STARTED:
+          return{
+            ...state,
+            editing:true
+          };
+        case types.DEGRADE_USER_SUCCESS:
+          return{
+            ...state,
+            editing:false,
+            error:false,
+            data:[
+              ...state.data.map( team => team._id === action.payload.teamId ? {...team, creators: [ ...team.creators.filter(user => user.id !== action.payload.userId) ]} : team)
+            ]
+          };
+        case types.DEGRADE_USER_FAILURE:
+          return{
+            ...state,
+            editing:false,
+            error: action.payload.error
+          }
     default:
       return state;
   }

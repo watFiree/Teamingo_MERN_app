@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
@@ -15,19 +15,13 @@ import { Context } from '../context/index';
 import styles from '../styles/Link.module.scss';
 import { deleteNote } from '../redux/actions/deleteNote';
 
-const NoteCard = ({
-  title,
-  coverImg,
-  author,
-  content,
-  teamName,
-  teamColor,
-  idLink,
-  admin = false,
-  deleteOne,
-  open,
-  editing,
-}) => {
+const NoteCard = ({title,coverImg,author,content,teamName,teamColor,idLink,admin = false,creator=false,deleteOne,open,editing,user}) => {
+
+  const [edit, setEdit] = useState(false);
+
+  useEffect(()=>{
+    if(user.data.nickname === author && creator) setEdit(true)
+  },[user])
   const useStyles = makeStyles(() => ({
     root: {
       maxWidth: 345,
@@ -80,7 +74,7 @@ const NoteCard = ({
             Learn More
           </Button>
         </Link>
-        {admin && (
+        {(admin || edit )&& (
           <>
             <Button
               onClick={handleEdition}
@@ -111,9 +105,12 @@ NoteCard.propTypes = {
   admin: PropTypes.string.isRequired,
 };
 
+const mapStateToProps = ({user}) => ({user});
+
 const mapDispatchToProps = (dispatch) => {
   return {
     deleteOne: (data) => dispatch(deleteNote(data)),
   };
 };
-export default connect(null, mapDispatchToProps)(NoteCard);
+
+export default connect(mapStateToProps, mapDispatchToProps)(NoteCard);

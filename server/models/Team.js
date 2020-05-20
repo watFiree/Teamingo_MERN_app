@@ -2,8 +2,8 @@ const mongoose = require('mongoose');
 
 const TeamSchema = new mongoose.Schema({
     name: String,
-    owner : Object,
-    admins: Array,
+    admin : Object,
+    creators: Array,
     color: String,
     notes: Array,
     users: Array

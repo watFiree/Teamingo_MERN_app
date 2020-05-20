@@ -10,7 +10,6 @@ import {inviteUser} from '../redux/actions/inviteUser';
 const ManageMembers = ({users,team,open, sendInvitation}) =>{
     
     const [data, setData] = useState({nickname: '', ...team})
-
     const handleChange = e => {
         setData({...data, nickname: e.target.value});
     }
@@ -20,6 +19,8 @@ const ManageMembers = ({users,team,open, sendInvitation}) =>{
         sendInvitation(data);
     }
     
+    console.log(users,team)
+
     return(
 
         <div className={styles.container} >
@@ -29,7 +30,7 @@ const ManageMembers = ({users,team,open, sendInvitation}) =>{
                 className={styles.icon}
             />
             <div className={styles.list}>
-                {users.map(user =>  <UserCard data={user} teamId={team.teamId} />)}
+                {users.map(user =>  <UserCard data={user} promoted={team.creators.some(person => person.id === user.id)} teamId={team.teamId} />)}
             </div>
             <form className={styles.form} onSubmit={handleSubmit}>
                 <Typography variant="h5" gutterBottom> Invite User</Typography>
