@@ -67,9 +67,11 @@ const Header = ({ setAuth, logout }) => {
           open={open}
           onClose={handleClose}
         >
-          <MenuItem className={styles.link} onClick={handleClose}>
-            Profile
-          </MenuItem>
+          <Link to="/profile" className={styles.link} >
+            <MenuItem  className={styles.link} onClick={handleClose}>
+              Profile
+            </MenuItem>
+          </Link>
           <Link to="/profile/teams" className={styles.link}>
             <MenuItem>Your Teams</MenuItem>
           </Link>

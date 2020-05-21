@@ -10,6 +10,7 @@ import TeamsView from './TeamsView';
 import NoteDetailsView from './NoteDetailsView';
 import TeamDetailsView from './TeamDetailsView';
 import ManageTeamsView from './ManageTeamsView';
+import ProfileView from './ProfileView';
 
 function Root() {
   return (
@@ -22,6 +23,7 @@ function Root() {
             <Route exact path="/team/:id" component={TeamDetailsView} />
             <Route exact path="/profile/teams" component={ManageTeamsView} />
             <Route exact path="/note/:id" component={NoteDetailsView} />
+            <Route exact path="/profile" component={ProfileView} />
             <Route exact path="/signin" component={SignInView} />
             <Route exact path="/signup" component={SignUpView} />
           </Switch>

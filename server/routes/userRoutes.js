@@ -11,5 +11,14 @@ userRouter.route('/invite')
 userRouter.route('/role')
     .post(userController.promoteUser)
     .delete(userController.degradeUser)
-    
+
+userRouter.route('/nickname')
+    .put(userController.editNickname)
+
+userRouter.route('/password')
+    .put(userController.editPassword)
+
+userRouter.route('/email')
+    .put(userController.editEmail)
+
 module.exports = userRouter;
