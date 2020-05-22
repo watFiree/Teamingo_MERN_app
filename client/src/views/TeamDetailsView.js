@@ -137,7 +137,8 @@ const TeamDetailsView = ({ match, data: teams, notes, user }) => {
         <EditNote open={isEditNoteOpenChange} data={editingNote.data} />
       )}
 
-      {isManageMembersOpen && (<ManageMembers users={data.users.filter(item => item.id !== user.data.id) /* fliltring members without current user */} team={{teamId:data._id , teamName: data.name, creators: data.creators}} open={isManageMembersOpenChange} />)}
+      {isManageMembersOpen && (<ManageMembers users={data.users.filter(item => item.id !== user.data.id) /* fliltring members without current user */} 
+        team={{teamId:data._id , teamName: data.name, creators: data.creators}} open={isManageMembersOpenChange} />)}
     </div>
   );
 };

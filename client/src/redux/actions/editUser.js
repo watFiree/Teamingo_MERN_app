@@ -31,6 +31,6 @@ export const editUser = (input) => {
         ...input,
       })
       .then(({ data }) => dispatch(editUserSuccess(data)))
-      .catch((err) => dispatch(editUserFailure(err)));
+      .catch(({response}) => dispatch(editUserFailure(response.data)));
   };
 };

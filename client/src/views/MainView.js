@@ -9,7 +9,7 @@ import { getNotes } from '../redux/actions/getNotes';
 
 const MainView = ({ user, notes, setData }) => {
   useEffect(() => {
-    if (!notes.data.length && user.notesId.length) setData(user.notesId);
+    if (user.notesId.length) setData(user.notesId);
   }, [user.notesId]);
   const { data } = notes;
 

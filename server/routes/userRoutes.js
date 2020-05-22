@@ -3,6 +3,9 @@ const userController = require('../controllers/userControler.js')
 
 const userRouter = express.Router();
 
+userRouter.route('/')
+    .get(userController.getData)
+    .delete(userController.deleteUser)
 
 userRouter.route('/invite')
     .post(userController.inviteUser)

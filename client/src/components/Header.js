@@ -22,7 +22,7 @@ const Header = ({ setAuth, logout }) => {
   };
   const handleLogout = () => {
     setAnchorEl(null);
-    logout(false);
+    logout();
   };
 
   return (

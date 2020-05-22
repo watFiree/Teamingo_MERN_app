@@ -12,6 +12,7 @@ const TeamsView = ({ user, teams, setTeams }) => {
     if (user.teamsId.length) setTeams(user.teamsId);
   }, [user.teamsId]);
 
+
   return (
     <div className={styles.grid}>
       {!user.teamsId.length && (

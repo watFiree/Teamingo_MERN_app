@@ -20,12 +20,11 @@ const ManageTeamsView = ({user,teams,setTeams}) => {
         if(!teams.data.length && user.teamsId.length) setTeams(user.teamsId);
         const filtredTeams = teams.data.filter(team =>  team.admin.id === user.data.id);
         setOwnedTeams(filtredTeams);
-    },[teams.data])
+    },[teams.data]);
     
     const handleClick = () => {
         isCreateTeamOpenChange(!isCreateTeamOpen);
     }
-    console.log(ownedTeams)
     return (
         <div className={styles.container}>
             <div className={styles.list}>

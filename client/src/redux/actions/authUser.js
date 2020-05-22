@@ -1,7 +1,6 @@
 import { USER_AUTH, USER_LOGOUT } from './actionTypes';
 
 export const authUser = (data) => {
-  console.log(data)
   return {
     type: USER_AUTH,
     payload: {
