@@ -14,10 +14,12 @@ import Button from '@material-ui/core/Button';
 import { Context } from '../context/index';
 import styles from '../styles/Link.module.scss';
 import { deleteNote } from '../redux/actions/deleteNote';
+import DeleteDialog from './Dialog';
 
 const NoteCard = ({title,coverImg,author,content,teamName,teamColor,idLink,admin = false,creator=false,deleteOne,open,editing,user}) => {
 
   const [edit, setEdit] = useState(false);
+  const [dialog,setDialog] = useState(false);
 
   useEffect(()=>{
     if(user.data.nickname === author && creator) setEdit(true)
@@ -41,6 +43,7 @@ const NoteCard = ({title,coverImg,author,content,teamName,teamColor,idLink,admin
 
   const handleDeletion = () => {
     deleteOne({ id: idLink, teamName });
+    setDialog(false)
   };
 
   const handleEdition = () => {
@@ -84,11 +87,12 @@ const NoteCard = ({title,coverImg,author,content,teamName,teamColor,idLink,admin
             >
               Edit
             </Button>
-            <Button onClick={handleDeletion} size="large" color="secondary">
+            <Button onClick={()=> setDialog(true)} size="large" color="secondary">
               Delete
             </Button>{' '}
           </>
         )}
+        <DeleteDialog open={dialog} disagreeFnc={()=>setDialog(false)} agreeFnc={handleDeletion}>Are you sure you want to <b>DELETE</b> this note ?</DeleteDialog>
       </CardActions>
     </CardWrapper>
   );

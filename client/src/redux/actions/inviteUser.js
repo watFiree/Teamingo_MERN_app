@@ -23,6 +23,6 @@ export const inviteUser = input => {
             ...input
         })
         .then(() => dispatch(inviteUserSuccess()))
-        .catch(err => dispatch(inviteUserFailure(err)))
+        .catch(({response}) => dispatch(inviteUserFailure(response.data.message)))
     }
 }

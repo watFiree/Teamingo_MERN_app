@@ -14,6 +14,8 @@ module.exports = {
             creators: [],
             notes:[],
         };
+        const exists = Team.findOne({name: req.body.name});
+        if(exists) return res.status(400).send({message: "Team with this name already exists !"})
         const team = await new Team(data);
         const admin = await User.findOne({_id: req.body.admin.id});
         if(!admin) return res.status(400);
@@ -23,15 +25,16 @@ module.exports = {
 
     },
     async deleteTeam(req,res){
-        const team = await Team.findOne({_id: req.body.teamId});
+        const {teamId:id} = req.body;
+        const team = await Team.findById(id);
         if(!team) return res.sendStatus(404);
         const notesIds = await team.notes;
         await Note.deleteMany({_id: notesIds});
         const usersIds = await team.users.map(user => user.id);
         await User.updateMany({_id: usersIds}, {$pull : {notes: {$in:notesIds}}})
-        await Team.deleteOne({_id: req.body.teamId});
-        await User.updateMany({_id: usersIds}, {$pull : {teams: req.body.teamId}});
-        res.status(200).send({id:req.body.teamId});
+        await Team.deleteOne({_id: id});
+        await User.updateMany({_id: usersIds}, {$pull : {teams: id}});
+        res.status(200).send({id, notes: notesIds});
     },
     async editTeam(req,res){
         const {name, color} = req.body;
@@ -66,6 +69,7 @@ module.exports = {
         await user.updateOne({$pull: {teams: teamId}});
         await user.updateOne({$pull: {notes: {$in:notesIds}}})
         await team.updateOne({$pull: {users: {id}}});
+        await team.updateOne({$pull: {creators: {id}}});
         res.status(200).send({userId: id, teamId, notesIds})
     }
 }

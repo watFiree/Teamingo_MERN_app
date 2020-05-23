@@ -31,6 +31,6 @@ export const createTeam = (input) => {
         ...input,
       })
       .then(({ data }) => dispatch(createTeamSuccess(data)))
-      .catch((err) => dispatch(createTeamFailure(err)));
+      .catch(({response}) => dispatch(createTeamFailure(response.data.message)));
   };
 };

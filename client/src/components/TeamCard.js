@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {connect} from 'react-redux';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
@@ -17,6 +17,7 @@ import Typography from '@material-ui/core/Typography';
 import styles from '../styles/Link.module.scss';
 import {leaveTeam} from '../redux/actions/leaveTeam';
 import {deleteTeam} from '../redux/actions/deleteTeam';
+import AlertDialog from './Dialog';
 
 const useStyles = makeStyles({
   root: {
@@ -29,15 +30,16 @@ const useStyles = makeStyles({
 });
 
 const TeamCard = ({ admin, teamName, users, notes, idLink, user, leaveFunction,deleteFunction}) => {
+  
   const classes = useStyles();
+  const isAdmin = admin.nickname === user.data.nickname;
+  const [dialog,setDialog] = useState(false);
 
   const handleLeave = () => {
+    setDialog(false);
     const data = {id: user.data.id, teamId: idLink}
-    if(admin.nickname === user.data.nickname){
-      deleteFunction(data)
-    }else{
-    leaveFunction(data)
-    }
+    if(isAdmin)deleteFunction(data)
+    else leaveFunction(data)
   }
 
   return (
@@ -70,11 +72,15 @@ const TeamCard = ({ admin, teamName, users, notes, idLink, user, leaveFunction,d
             See more
           </Button>
         </Link>
-        <Link className={styles.link} to="teams/">
-          <Button size="large" color="secondary" onClick={handleLeave} >
-            Leave
+          <Button size="large" color="secondary" onClick={()=>setDialog(true)} >
+            {isAdmin ? "Delete" : "Leave"}
           </Button>
-        </Link>
+        <AlertDialog open={isAdmin && dialog} disagreeFnc={()=>setDialog(false)} agreeFnc={handleLeave}>
+          Are you sure you want to <b>DELETE</b> {teamName} team ? <br/>All notes will be also <b>DELETED</b> !
+        </AlertDialog>
+        <AlertDialog open={!isAdmin && dialog} disagreeFnc={()=>setDialog(false)} agreeFnc={handleLeave}>
+          Are you sure you want to <b>LEAVE</b> {teamName} team ? <br/> You will <b>not</b> have access to any notes !
+        </AlertDialog>
       </CardActions>
     </Card>
   );

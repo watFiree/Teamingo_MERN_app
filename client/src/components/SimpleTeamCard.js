@@ -1,16 +1,19 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import Button from '@material-ui/core/Button';
 import { deleteTeam } from '../redux/actions/deleteTeam';
 import { Context } from '../context/index';
 import styles from '../styles/SimpleTeamCard.module.scss';
+import DeleteDialog from "./Dialog";
 
 const SimpleTeamCard = ({ data, open, editing, deleteThis }) => {
   const currentDataToEdit = useContext(Context);
+  const [dialog,setDialog] = useState(false)
 
   const handleDeletion = () => {
-    deleteThis({ id: data._id, notes: data.notes });
+    deleteThis({id: data._id});
+    setDialog(false);
   };
 
   const handleEdition = () => {
@@ -31,10 +34,11 @@ const SimpleTeamCard = ({ data, open, editing, deleteThis }) => {
         <Button color="primary" disabled={editing} onClick={handleEdition}>
           Edit
         </Button>
-        <Button onClick={handleDeletion} color="secondary">
+        <Button onClick={()=>setDialog(true)} color="secondary">
           Remove
         </Button>
       </div>
+      <DeleteDialog open={dialog} disagreeFnc={()=>setDialog(false)} agreeFnc={handleDeletion} >Are you sure you want to <b>DELETE</b> {data.name} team ? <br/>All notes will be also <b>DELETED</b> !</DeleteDialog>
     </div>
   );
 };

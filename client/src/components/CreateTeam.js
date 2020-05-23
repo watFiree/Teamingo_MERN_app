@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import { connect } from 'react-redux';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
@@ -6,12 +6,15 @@ import CloseIcon from '@material-ui/icons/Close';
 import { createTeam } from '../redux/actions/createTeam';
 import styles from '../styles/TeamActionForm.module.scss';
 
-const CreateNote = ({ user, createFunction, open }) => {
+const CreateNote = ({ user,createFunction, open }) => {
+
   const color = `#${Math.floor(Math.random() * 16777215).toString(16)}`;
   const [data, setData] = useState({ color });
+  const form = useRef()
 
   const handleCreate = (e) => {
     e.preventDefault();
+    form.current.reset();
     createFunction(data);
     open(false);
   };
@@ -38,7 +41,7 @@ const CreateNote = ({ user, createFunction, open }) => {
           ❤️
         </span>{' '}
       </h1>
-      <form className={styles.form} onSubmit={handleCreate} autoComplete="off">
+      <form className={styles.form} ref={form} onSubmit={handleCreate} autoComplete="off">
         <TextField onChange={handleChange} label="Team name" id="name" variant="outlined" />
         <Button type="submit" variant="contained" color="primary">
           {' '}
@@ -49,7 +52,7 @@ const CreateNote = ({ user, createFunction, open }) => {
   );
 };
 
-const mapStateToProps = ({ user }) => ({ user });
+const mapStateToProps = ({ user}) => ({ user});
 
 const mapDispatchToProps = (dispatch) => {
   return {

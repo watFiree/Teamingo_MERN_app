@@ -54,11 +54,14 @@ const teamsReducer = (state = initialState, action) => {
     case types.CREATE_TEAM_SUCCESS:
       return {
         ...state,
+        creating: false,
+        error:null,
         data: [...state.data, action.payload],
       };
     case types.CREATE_TEAM_FAILURE:
       return {
         ...state,
+        creating: false,
         error: action.payload.error,
       };
     case types.DELETE_NOTE_SUCCESS:
@@ -116,84 +119,124 @@ const teamsReducer = (state = initialState, action) => {
         editing: false,
         error: action.payload.error,
       };
+    case types.INVITE_USER_STARTED:
+      return {
+        ...state,
+        editing: true,
+      };
+    case types.INVITE_USER_SUCCESS:
+      return {
+        ...state,
+        editing: false,
+        error: null
+      };
     case types.INVITE_USER_FAILURE:
       return {
         ...state,
+        editing: false,
         error: action.payload.error,
       };
-      case types.ADD_USER_SUCCESS:
-        return {
-          ...state,
-          data: [
-            ...state.data,
-            action.payload
-          ]
-        };
-      case types.REMOVE_USER_STARTED:
-        return {
-          ...state,
-          editing: true
-        };
-      case types.REMOVE_USER_SUCCESS:
-        return{
-          ...state,
-          editing:false,
-          data: [
-            ...state.data.map(team => team._id === action.payload.teamId ? {...team, users: [ ...team.users.filter(user => user.id !== action.payload.userId)]} : team)
-          ]
-        };
-      case types.REMOVE_USER_FAILURE:
-        return{
-          ...state,
-          editing: false,
-          error: action.payload.error
-        };
-      case types.LEAVE_TEAM_SUCCESS:
-        return {
-          ...state,
-          deleting: false,
-          data: [...state.data.filter((item) => item._id !== action.payload.teamId)],
-        };
-      case types.PROMOTE_USER_STARTED:
-        return{
-          ...state,
-          editing:true
-        };
-      case types.PROMOTE_USER_SUCCESS:
-        return{
-          ...state,
-          editing:false,
-          error:false,
-          data:[
-            ...state.data.map( team => team._id === action.payload.teamId ? {...team, creators: [ ...team.creators, {...action.payload.user}]} : team)
-          ]
-        };
-      case types.PROMOTE_USER_FAILURE:
-        return{
-          ...state,
-          editing:false,
-          error: action.payload.error
-        };
-        case types.DEGRADE_USER_STARTED:
-          return{
-            ...state,
-            editing:true
-          };
-        case types.DEGRADE_USER_SUCCESS:
-          return{
-            ...state,
-            editing:false,
-            error:false,
-            data:[
-              ...state.data.map( team => team._id === action.payload.teamId ? {...team, creators: [ ...team.creators.filter(user => user.id !== action.payload.userId) ]} : team)
-            ]
-          };
-        case types.DEGRADE_USER_FAILURE:
-          return{
-            ...state,
-            editing:false,
-            error: action.payload.error
-          }
+    case types.ADD_USER_SUCCESS:
+      return {
+        ...state,
+        data: [...state.data, action.payload],
+      };
+    case types.REMOVE_USER_STARTED:
+      return {
+        ...state,
+        editing: true,
+      };
+    case types.REMOVE_USER_SUCCESS:
+      return {
+        ...state,
+        editing: false,
+        data: [
+          ...state.data.map((team) =>
+            team._id === action.payload.teamId
+              ? {
+                  ...team,
+                  users: [
+                    ...team.users.filter(
+                      (user) => user.id !== action.payload.userId,
+                    ),
+                  ],
+                }
+              : team,
+          ),
+        ],
+      };
+    case types.REMOVE_USER_FAILURE:
+      return {
+        ...state,
+        editing: false,
+        error: action.payload.error,
+      };
+    case types.LEAVE_TEAM_SUCCESS:
+      return {
+        ...state,
+        deleting: false,
+        data: [
+          ...state.data.filter((item) => item._id !== action.payload.teamId),
+        ],
+      };
+    case types.PROMOTE_USER_STARTED:
+      return {
+        ...state,
+        editing: true,
+      };
+    case types.PROMOTE_USER_SUCCESS:
+      return {
+        ...state,
+        editing: false,
+        error: false,
+        data: [
+          ...state.data.map((team) =>
+            team._id === action.payload.teamId
+              ? {
+                  ...team,
+                  creators: [...team.creators, { ...action.payload.user }],
+                }
+              : team,
+          ),
+        ],
+      };
+    case types.PROMOTE_USER_FAILURE:
+      return {
+        ...state,
+        editing: false,
+        error: action.payload.error,
+      };
+    case types.DEGRADE_USER_STARTED:
+      return {
+        ...state,
+        editing: true,
+      };
+    case types.DEGRADE_USER_SUCCESS:
+      return {
+        ...state,
+        editing: false,
+        error: false,
+        data: [
+          ...state.data.map((team) =>
+            team._id === action.payload.teamId
+              ? {
+                  ...team,
+                  creators: [
+                    ...team.creators.filter(
+                      (user) => user.id !== action.payload.userId,
+                    ),
+                  ],
+                }
+              : team,
+          ),
+        ],
+      };
+    case types.DEGRADE_USER_FAILURE:
+      return {
+        ...state,
+        editing: false,
+        error: action.payload.error,
+      };
     default:
       return state;
   }

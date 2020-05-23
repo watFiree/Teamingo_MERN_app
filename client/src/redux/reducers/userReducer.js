@@ -7,7 +7,7 @@ const initialState = {
   notesId: [],
   teamsId: [],
   processing: false,
-  error: false,
+  error: null,
 };
 
 const userReducer = (state = initialState, action) => {
@@ -20,6 +20,7 @@ const userReducer = (state = initialState, action) => {
       return {
         ...state,
         authenticated: true,
+        error: null,
         data: {
           ...state.data,
           nickname: action.payload.nickname,
@@ -38,7 +39,7 @@ const userReducer = (state = initialState, action) => {
       return{
         ...state,
         processing:false,
-        error: false,
+        error: null,
         invitations: [...action.payload.invitations],
         notesId: [...action.payload.notes],
         teamsId: [...action.payload.teams],
@@ -88,7 +89,7 @@ const userReducer = (state = initialState, action) => {
         notesId: [...state.notesId, ...action.payload.notes],
         teamsId: [...state.teamsId, action.payload._id],
         processing: false,
-        error: false,
+        error: null,
       };
     case types.ADD_USER_FAILURE:
       return {
@@ -105,7 +106,7 @@ const userReducer = (state = initialState, action) => {
       return {
         ...state,
         processing: false,
-        error: false,
+        error: null,
         invitations: [
           ...state.invitations.filter(
             (item) => item.teamId !== action.payload.teamId,
@@ -127,7 +128,7 @@ const userReducer = (state = initialState, action) => {
       return {
         ...state,
         processing: false,
-        error: false,
+        error: null,
         notesId: [
           ...state.notesId.filter(
             (id) => !action.payload.notesIds.includes(id),
@@ -152,7 +153,7 @@ const userReducer = (state = initialState, action) => {
       return {
         ...state,
         processing: false,
-        error: false,
+        error: null,
         data: {
           ...state.data,
           nickname:
