@@ -17,7 +17,7 @@ module.exports = {
         if(!user) return res.status(404).send({message: "User doesn't exist !"});
         const invited = await User.findOne({nickname, "invitations.teamId":teamId});
         if(invited) return res.status(400).send({message: "User already invited !"});
-        const belong = Team.findOne({id: teamId, "users.nickname": nickname});
+        const belong = await Team.findOne({id: teamId, "users.nickname": nickname});
         if(belong) return res.status(400).send({message: "User already belongs to team !"});
         await user.updateOne({$push: {invitations: {teamId, teamName}}})
         res.sendStatus(200);

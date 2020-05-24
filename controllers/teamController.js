@@ -14,7 +14,8 @@ module.exports = {
             creators: [],
             notes:[],
         };
-        const exists = Team.findOne({name: req.body.name});
+        console.log(req.body)
+        const exists = await Team.findOne({name: req.body.name});
         if(exists) return res.status(400).send({message: "Team with this name already exists !"})
         const team = await new Team(data);
         const admin = await User.findOne({_id: req.body.admin.id});

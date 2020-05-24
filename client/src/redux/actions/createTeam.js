@@ -27,7 +27,7 @@ export const createTeam = (input) => {
   return (dispatch) => {
     dispatch(createTeamStarted());
     axios
-      .post('/teams/', {
+      .post('/teams', {
         ...input,
       })
       .then(({ data }) => dispatch(createTeamSuccess(data)))
