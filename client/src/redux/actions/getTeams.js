@@ -29,7 +29,7 @@ export const getTeams = (teamsId) => {
     dispatch(getTeamsStarted());
 
     axios
-      .get(`http://localhost:6969/teams/`, {
+      .get(`/teams/`, {
         params: {
           ids: teamsId,
         },

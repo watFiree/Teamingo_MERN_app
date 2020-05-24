@@ -25,7 +25,7 @@ const SignInView = ({setAuth}) => {
   const handleAuthenticate = (e) => {
     e.preventDefault();
     axios
-      .post('http://localhost:6969/auth/signin', {
+      .post('/auth/signin', {
         nickname,
         password,
       }).then(res => {

@@ -27,7 +27,7 @@ export const editTeam = (input) => {
   return (dispatch) => {
     dispatch(editTeamStarted());
     axios
-      .put(`http://localhost:6969/teams/`, {
+      .put(`/teams/`, {
         ...input,
       })
       .then(({ data }) => dispatch(editTeamSuccess(data)))

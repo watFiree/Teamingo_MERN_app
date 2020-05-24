@@ -22,7 +22,7 @@ const removeInvitationStarted = () => ({
 export const removeInvitation = input => {
     return dispatch => {
         dispatch(removeInvitationStarted())
-        axios.delete('http://localhost:6969/user/invite', {
+        axios.delete('/user/invite', {
             data: input
         })
         .then(({data}) => dispatch(removeInvitationSuccess(data)))

@@ -29,7 +29,7 @@ export const deleteNote = (input) => {
   return (dispatch) => {
     dispatch(deleteNoteStarted());
     axios
-      .delete('http://localhost:6969/notes/', { data: input })
+      .delete('/notes/', { data: input })
       .then(() => dispatch(deleteNoteSuccess(input)))
       .catch((err) => dispatch(deleteNoteFailure(err)));
   };

@@ -27,7 +27,7 @@ export const editUser = (input) => {
   return (dispatch) => {
     dispatch(editUserStarted());
     axios
-      .put(`http://localhost:6969/user/${input.type}`, {
+      .put(`/user/${input.type}`, {
         ...input,
       })
       .then(({ data }) => dispatch(editUserSuccess(data)))

@@ -32,7 +32,7 @@ export const createNote = (input) => {
   return (dispatch, getState) => {
     dispatch(createNoteStarted());
     axios
-      .post('http://localhost:6969/notes/', {
+      .post('/notes/', {
         ...input,
       })
       .then(({ data }) => {

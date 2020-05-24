@@ -36,7 +36,7 @@ const ProfileAction = ({type,user,updateUser}) => {
                     type={type}
                     id={`Current ${type}`}
                     onChange={handleChange}
-                    error={user.error.message && user.error.type === type}
+                    error={user.error?.message && user.error?.type === type}
                 />)}
                 <TextField
                     variant="outlined"
@@ -47,9 +47,9 @@ const ProfileAction = ({type,user,updateUser}) => {
                     type={type}
                     id={`New ${type}`}
                     onChange={handleChange}
-                    error={user.error.message && user.error.type === type}
+                    error={user.error?.message && user.error?.type === type}
                 />
-                { (user.error.message  && user.error.type === type) && <Typography component="p" variant="subtitle1" color="secondary" >{user.error.message}</Typography>}
+                { (user.error?.message  && user.error?.type === type) && <Typography component="p" variant="subtitle1" color="secondary" >{user.error.message}</Typography>}
                 <Button    
                     type="submit"
                     variant="contained"

@@ -1,4 +1,5 @@
 const express = require('express');
+const path = require("path");
 const bodyParser = require('body-parser');
 const chalk = require('chalk');
 const cors = require('cors');
@@ -11,7 +12,7 @@ const jwt = require('jsonwebtoken');
 require('dotenv').config();
 
 const app = express();
-const port = process.env.PORT || 7777;
+const port = process.env.PORT || 6969;
 const authRouter = require('./routes/authRoutes');
 const noteRouter = require('./routes/noteRoutes');
 const teamRouter = require('./routes/teamRoutes');
@@ -45,6 +46,11 @@ app.get('/',(req,res) =>{
    res.send('hello')
 })
  
+app.use(express.static(path.join(__dirname, "client", "build")));
+app.get("*", (req, res) => {
+    res.sendFile(path.join(__dirname, "client", "build", "index.html"));
+});
+
 mongoose.connect(process.env.DB_URL, {useNewUrlParser: true, useUnifiedTopology: true, dbName: 'database'});
 const MongoDB = mongoose.connection;
 MongoDB.on('error', console.error.bind(console, 'connection error:'));

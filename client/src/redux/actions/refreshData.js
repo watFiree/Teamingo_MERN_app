@@ -22,7 +22,7 @@ const refreshDataStarted = () => ({
 export const refreshData = id => {
     return dispatch => {
         dispatch(refreshDataStarted())
-        axios.get(`http://localhost:6969/user/?id=${id}`)
+        axios.get(`/user/?id=${id}`)
         .then(({data}) => dispatch(refreshDataSuccess(data)))
         .catch(err => dispatch(refreshDataFailure(err)))
     }

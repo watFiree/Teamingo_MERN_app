@@ -22,7 +22,7 @@ const promoteUserStarted = () => ({
 export const promoteUser = input => {
     return dispatch => {
         dispatch(promoteUserStarted())
-        axios.post('http://localhost:6969/user/role', {
+        axios.post('/user/role', {
             ...input
         })
         .then(({data}) => dispatch(promoteUserSuccess(data)))

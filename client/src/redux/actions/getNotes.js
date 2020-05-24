@@ -29,7 +29,7 @@ export const getNotes = (notesId) => {
     dispatch(getNotesStarted());
 
     axios
-      .get(`http://localhost:6969/notes/`, {
+      .get(`/notes/`, {
         params: {
           ids: notesId,
         },

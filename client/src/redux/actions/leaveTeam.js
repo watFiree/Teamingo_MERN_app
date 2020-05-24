@@ -23,7 +23,7 @@ const leaveTeamFailure = error => ({
 export const leaveTeam = input => {
     return dispatch => {
         dispatch(leaveTeamStarted());
-        axios.delete('http://localhost:6969/teams/user', {
+        axios.delete('/teams/user', {
             data: input
         })
         .then(({data}) => dispatch(leaveTeamSuccess(data)))

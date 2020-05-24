@@ -22,7 +22,7 @@ const degradeUserStarted = () => ({
 export const degradeUser = input => {
     return dispatch => {
         dispatch(degradeUserStarted())
-        axios.delete('http://localhost:6969/user/role', {
+        axios.delete('/user/role', {
             data:input
         })
         .then(({data}) => dispatch(degradeUserSuccess(data)))

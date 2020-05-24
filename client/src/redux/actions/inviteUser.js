@@ -19,7 +19,7 @@ const inviteUserStarted = () => ({
 export const inviteUser = input => {
     return dispatch => {
         dispatch(inviteUserStarted())
-        axios.post('http://localhost:6969/user/invite', {
+        axios.post('/user/invite', {
             ...input
         })
         .then(() => dispatch(inviteUserSuccess()))

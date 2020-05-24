@@ -27,7 +27,7 @@ export const createTeam = (input) => {
   return (dispatch) => {
     dispatch(createTeamStarted());
     axios
-      .post('http://localhost:6969/teams/', {
+      .post('/teams/', {
         ...input,
       })
       .then(({ data }) => dispatch(createTeamSuccess(data)))

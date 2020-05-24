@@ -19,7 +19,7 @@ const deleteUserStarted = () => ({
 export const deleteUser = input => {
     return dispatch => {
         dispatch(deleteUserStarted())
-        axios.delete('http://localhost:6969/user', {
+        axios.delete('/user', {
             data: input
         })
         .then(() => dispatch(deleteUserSuccess()))

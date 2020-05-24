@@ -10,7 +10,7 @@ import { getTeams } from '../redux/actions/getTeams';
 const TeamsView = ({ user, teams, setTeams }) => {
   useEffect(() => {
     if (user.teamsId.length) setTeams(user.teamsId);
-  }, [user.teamsId]);
+  }, []);
 
 
   return (

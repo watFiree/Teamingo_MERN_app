@@ -23,7 +23,7 @@ const removeUserFailure = error => ({
 export const removeUser = input => {
     return dispatch => {
         dispatch(removeUserStarted());
-        axios.delete('http://localhost:6969/teams/user', {
+        axios.delete('/teams/user', {
             data: input
         })
         .then(({data}) => dispatch(removeUserSuccess(data)))

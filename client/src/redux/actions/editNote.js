@@ -27,7 +27,7 @@ export const editNote = (input) => {
   return (dispatch) => {
     dispatch(editNoteStarted);
     axios
-      .put('http://localhost:6969/notes/', {
+      .put('/notes/', {
         ...input,
       })
       .then(({ data }) => {

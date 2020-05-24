@@ -29,7 +29,7 @@ export const deleteTeam = (input) => {
   return (dispatch) => {
     dispatch(deleteTeamStarted());
     axios
-      .delete('http://localhost:6969/teams/', { data: input })
+      .delete('/teams/', { data: input })
       .then(({data}) => dispatch(deleteTeamSuccess(data)))
       .catch((err) => dispatch(deleteTeamFailure(err)));
   };
