@@ -41,21 +41,17 @@ app.use('/auth', authRouter);
 app.use('/notes', noteRouter);
 app.use('/teams', teamRouter);
 app.use('/user', userRouter);
-
-app.get('/',(req,res) =>{
-   res.send('hello')
-})
  
 app.use(express.static(path.join(__dirname, "client", "build")));
-app.get("*", (req, res) => {
-    res.sendFile(path.join(__dirname, "client", "build", "index.html"));
-});
 
 mongoose.connect(process.env.DB_URL, {useNewUrlParser: true, useUnifiedTopology: true, dbName: 'database'});
 const MongoDB = mongoose.connection;
 MongoDB.on('error', console.error.bind(console, 'connection error:'));
 MongoDB.once('open', () => {
     console.log('Connected to MongoDB')
+    app.get("*", (req, res) => {
+        res.sendFile(path.join(__dirname, "client", "build", "index.html"));
+    });
     app.listen(port, () => console.log(`Listening at port ${chalk.green(port)}`));
 })
 
