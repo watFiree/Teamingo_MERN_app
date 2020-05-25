@@ -27,9 +27,9 @@ const Header = ({ setAuth, logout }) => {
 
   return (
     <div className={styles.wrapper}>
-      <Typography variant="h4" component="h2">
+      <h1 className={styles.wrapper__header}>
         Teamingo
-      </Typography>
+      </h1>
       <ul className={styles.navigation}>
         <Link className={styles.link} to="/">
           Home

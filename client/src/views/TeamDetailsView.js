@@ -19,14 +19,7 @@ import AddAction from '../components/AddAction';
 import ManageMembers from '../components/ManageMembers';
 
 const TeamDetailsView = ({ match, data: teams, notes, user }) => {
-  const [data, setData] = useState({
-    admin: { nickname: '', id: '' },
-    name: '',
-    color: '',
-    creators: [],
-    notes: [],
-    users: [],
-  });
+  const [data, setData] = useState({});
   const [isCreateNoteOpen, isCreateNoteOpenChange] = useState(false);
   const [isEditNoteOpen, isEditNoteOpenChange] = useState(false);
   const [isManageMembersOpen, isManageMembersOpenChange] = useState(false);
@@ -44,8 +37,8 @@ const TeamDetailsView = ({ match, data: teams, notes, user }) => {
       team.notes.includes(note._id),
     );
     setItems(filtredNotes);
-    if (user.data.id === data.admin.id) setAdmin(true);
-    if (data.creators.some(person => person.id === user.data.id)) setCreator(true);
+    if (user.data.id === data.admin?.id) setAdmin(true);
+    if (data.creators?.some(person => person.id === user.data.id)) setCreator(true);
   }, [teams, notes.data, match.params.id, user, data]);
 
   const handleOpenCreateNote = () => {
@@ -67,7 +60,7 @@ const TeamDetailsView = ({ match, data: teams, notes, user }) => {
                 <SupervisorAccountIcon color="primary" />
               </Avatar>
             </ListItemAvatar>
-            <ListItemText primary="Users" secondary={data.users.length} />
+            <ListItemText primary="Users" secondary={data.users?.length} />
           </ListItem>
           <Divider variant="inset" component="li" />
           <ListItem>
@@ -76,7 +69,7 @@ const TeamDetailsView = ({ match, data: teams, notes, user }) => {
                 <NoteIcon color="primary" />
               </Avatar>
             </ListItemAvatar>
-            <ListItemText primary="Notes" secondary={data.notes.length} />
+            <ListItemText primary="Notes" secondary={data.notes?.length} />
           </ListItem>
         </List>
         
@@ -110,6 +103,7 @@ const TeamDetailsView = ({ match, data: teams, notes, user }) => {
               teamName={item.teamName}
               teamColor={item.teamColor}
               idLink={item._id}
+              date={data.updatedAt}
               open={isEditNoteOpenChange}
               editing={isEditNoteOpen}
             />

@@ -36,6 +36,7 @@ const EditTeam = ({ data, open, updateData }) => {
             onChange={handleChange}
             label="Team name"
             id="name"
+            required
             defaultValue={data.name}
           />
           <Button onClick={() => setVisibility(!visibility)}>Pick color</Button>

@@ -30,6 +30,7 @@ const EditNote = ({ data, open, updateData }) => {
         <TextField
           onChange={handleInputChange}
           className={styles.input}
+          required
           id="title"
           label="Title"
           variant="outlined"
@@ -39,7 +40,7 @@ const EditNote = ({ data, open, updateData }) => {
           onChange={handleInputChange}
           className={styles.input}
           id="coverImg"
-          label="Image"
+          label="Image URL"
           variant="outlined"
           defaultValue={data.coverImg}
         />
@@ -47,6 +48,7 @@ const EditNote = ({ data, open, updateData }) => {
           id="content"
           label="Content"
           multiline
+          required
           onChange={handleInputChange}
           rows={6}
           variant="outlined"

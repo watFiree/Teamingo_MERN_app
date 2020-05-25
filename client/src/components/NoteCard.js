@@ -16,7 +16,7 @@ import styles from '../styles/Link.module.scss';
 import { deleteNote } from '../redux/actions/deleteNote';
 import DeleteDialog from './Dialog';
 
-const NoteCard = ({title,coverImg,author,content,teamName,teamColor,idLink,admin = false,creator=false,deleteOne,open,editing,user}) => {
+const NoteCard = ({title,coverImg,author,content,teamName,teamColor,idLink,date,admin = false,creator=false,deleteOne,open,editing,user}) => {
 
   const [edit, setEdit] = useState(false);
   const [dialog,setDialog] = useState(false);
@@ -28,6 +28,9 @@ const NoteCard = ({title,coverImg,author,content,teamName,teamColor,idLink,admin
     root: {
       maxWidth: 345,
       minWidth: 345,
+      ['@media (max-width:350px)']: {
+        minWidth: 300,
+      }
     },
     media: {
       height: 0,
@@ -60,7 +63,7 @@ const NoteCard = ({title,coverImg,author,content,teamName,teamColor,idLink,admin
           </Avatar>
         }
         title={author}
-        subheader="September 14, 2016"
+        subheader={new Date(date).toString().slice(3,21)}
       />
       <CardMedia className={classes.media} image={coverImg} title={teamName} />
       <CardContent>

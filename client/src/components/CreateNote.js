@@ -38,6 +38,7 @@ const CreateNote = ({ teamData, open, sentCreation }) => {
           onChange={handleInputChange}
           className={styles.input}
           id="title"
+          required
           label="Title"
           variant="outlined"
         />
@@ -45,12 +46,13 @@ const CreateNote = ({ teamData, open, sentCreation }) => {
           onChange={handleInputChange}
           className={styles.input}
           id="coverImg"
-          label="Image"
+          label="Image URL"
           variant="outlined"
         />
         <TextField
           id="content"
           label="Content"
+          required
           multiline
           onChange={handleInputChange}
           rows={6}
