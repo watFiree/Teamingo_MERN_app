@@ -33,7 +33,7 @@ const ManageMembers = ({users,team, teams:{error, editing}, open, sendInvitation
             />
             <div className={styles.list}>
                 <h2 className={styles.list__header}>Members</h2>
-                {users.map(user =>  <UserCard data={user} promoted={team.creators.some(person => person.id === user.id)} teamId={team.teamId} />)}
+                {users.map(user =>  <UserCard key={user.data.nickname} data={user} promoted={team.creators.some(person => person.id === user.id)} teamId={team.teamId} />)}
             </div>
             <form className={styles.form} ref={form} onSubmit={handleSubmit}>
                 <Typography variant="h5" gutterBottom> Invite User</Typography>

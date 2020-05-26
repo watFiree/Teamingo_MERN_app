@@ -11,9 +11,8 @@ const UserCard = ({data,teamId,promoted,sendRemoval,makeCreator,makeMember}) => 
     
     const [dialog,setDialog] = useState(false);
     const [remove,setRemove] = useState(false);
-    const user = {...data, teamId}
-    const content = promoted ? `Are you sure you want to degrade this user ?  \n ${user.nickname} will not be able to create ant notes and edit them any more !` :
-    `Are you sure you want to promote this user ?  \n ${user.nickname} will be able to create notes and edit them` 
+    const user = {...data, teamId};
+
     const handleRemoval = () => {
         sendRemoval(user)
     }

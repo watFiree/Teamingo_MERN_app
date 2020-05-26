@@ -37,6 +37,8 @@ const MainView = ({ user, notes, setData }) => {
             teamColor={item.teamColor}
             idLink={item._id}
             date={item.updatedAt}
+            admin={false}
+            creator={false}
           />
         ))
       )}

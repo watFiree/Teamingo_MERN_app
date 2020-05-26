@@ -1,6 +1,5 @@
 /* eslint-disable react/prefer-stateless-function */
 import React, { useEffect } from 'react';
-import axios from 'axios'
 import { compose } from 'redux';
 import { Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';

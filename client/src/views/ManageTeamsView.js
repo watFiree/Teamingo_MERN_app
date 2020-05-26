@@ -59,7 +59,7 @@ const ManageTeamsView = ({ user, teams, setTeams }) => {
         <div className={styles.invitations}>
           <h2>Invitations</h2>
           {user.invitations.map((item) => (
-            <Invitation data={item} />
+            <Invitation key={item.teamId} data={item} />
           ))}
         </div>
       </div>
