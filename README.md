@@ -2,7 +2,7 @@
 
 Teamingo is a web-app which allows to share notes between people in teams.
 
-<img src="https://i.ibb.co/yBF4PXG/teamingo1.png" alt="teamingo1" width="90%" border="0">
+<img src="https://i.ibb.co/yBF4PXG/teamingo1.png" alt="teamingo1" border="0">
 
 <img src="https://i.ibb.co/JF1p9GX/teamingo2.png" alt="teamingo2" width="90%" border="0">
 
